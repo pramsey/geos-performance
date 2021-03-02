@@ -76,7 +76,7 @@ export LD_LIBRARY_PATH=/opt/geos/development/lib
 
 Each test lives in a single file, and defines a 'setup', 'run' and 'cleanup' phase. For simplicity, all the tests are named `geos_perf_test_*.c`.
 
-The [geos_perf_tests_buffer.c](geos_perf_tests_buffer.c) is a good example.
+The [geos_perf_tests_buffer.c](https://github.com/pramsey/geos-performance/blob/fdeba6d471a5ef6f1b45e03956e53f3606ca9368/geos_perf.c) test is a good example.
 
 * It has one global variable, [watersheds](https://github.com/pramsey/geos-performance/blob/fdeba6d471a5ef6f1b45e03956e53f3606ca9368/geos_perf_test_buffer.c#L10) which is a [GeometryList](https://github.com/pramsey/geos-performance/blob/fdeba6d471a5ef6f1b45e03956e53f3606ca9368/geos_perf.h#L53-L61), a utility struct for a variable-length collection of `GEOSGeom*`.
 * In [setup()](https://github.com/pramsey/geos-performance/blob/fdeba6d471a5ef6f1b45e03956e53f3606ca9368/geos_perf_test_buffer.c#L12-L17) it data from a gzipped WKT file into a global variable, using a the [read_data_file](https://github.com/pramsey/geos-performance/blob/fdeba6d471a5ef6f1b45e03956e53f3606ca9368/geos_perf.h#L72-L77) utility function.
