@@ -12,7 +12,10 @@ GEOSGeometryList watersheds;
 /* Read any data we need, and create any structures */
 static void setup(void)
 {
+    /* Geometry list always must be initialized before use */
+    /* so the internal array is prepared, and counters zero'ed out */
     geomlist_init(&watersheds);
+    /* Use utility function to read data file into geometry list */
     read_data_file("watersheds.wkt.gz", &watersheds);
 }
 

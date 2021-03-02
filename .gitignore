@@ -1,0 +1,3 @@
+*.o
+_build
+geos-perf
