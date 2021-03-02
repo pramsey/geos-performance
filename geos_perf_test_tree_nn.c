@@ -7,7 +7,7 @@
 */
 
 /* GEOS <= 3.5 lacks GEOSSTRtree_nearest() */
-#if GEOS_VERSION_CMP > 315
+#if GEOS_VERSION_CMP > 305
 
 /* Variables where data lives between the setup/run/cleanup stages */
 GEOSGeometryList points_random;

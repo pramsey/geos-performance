@@ -13,19 +13,21 @@
 * To register a new test module, add the config function
 * signature here.
 */
-gp_test config_union_watersheds(void);
 gp_test config_buffer_watersheds(void);
+gp_test config_intersection(void);
+gp_test config_point_in_polygon(void);
 gp_test config_tree_points(void);
 gp_test config_tree_points_nn(void);
-gp_test config_point_in_polygon(void);
+gp_test config_union_watersheds(void);
 
 /*
 * And then add the function name here
 */
 static gp_config_func gp_config_funcs[] =
 {
-    config_union_watersheds,
     config_buffer_watersheds,
+    config_intersection,
+    config_union_watersheds,
     config_tree_points,
     config_tree_points_nn,
     config_point_in_polygon,
