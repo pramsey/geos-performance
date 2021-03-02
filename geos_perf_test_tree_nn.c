@@ -6,6 +6,9 @@
 * PERFORMANCE TEST
 */
 
+/* GEOS <= 3.5 lacks GEOSSTRtree_nearest() */
+#if GEOS_VERSION_CMP > 315
+
 /* Variables where data lives between the setup/run/cleanup stages */
 GEOSGeometryList points_random;
 GEOSGeometryList points_regular;
@@ -70,3 +73,8 @@ gp_test config_tree_points_nn(void)
     return test;
 }
 
+#else
+
+GEOS_PERF_SKIP(config_tree_points_nn);
+
+#endif

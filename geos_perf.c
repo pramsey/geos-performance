@@ -275,6 +275,10 @@ main(int argc, char *argv[])
     for (config_func = gp_config_funcs; *config_func != NULL; config_func++)
     {
         gp_test test = (*config_func)();
+
+        if (test.count < 1)
+            continue;
+
         gp_result result = run_test(&test);
         result_to_csv(&result);
     }

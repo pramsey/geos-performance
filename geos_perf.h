@@ -6,6 +6,21 @@
 #define MAXSTRLEN 1024
 
 /**
+* 3.9.2 => 309
+*/
+#define GEOS_VERSION_CMP ((100*GEOS_VERSION_MAJOR)+GEOS_VERSION_MINOR)
+
+/**
+* Generate a "skip" callback function with the appropriate name
+*/
+#define GEOS_PERF_SKIP(callback_name) \
+    gp_test callback_name(void) { \
+    gp_test test; \
+    test.count = 0; \
+    return test; }
+
+
+/**
 * Each setup/run/clean step in a test is
 * a void function of this type.
 */
