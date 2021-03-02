@@ -1,0 +1,7 @@
+
+/*
+ * Directory where the test data files (*.wkt.gz)
+ * reside.
+ */
+#cmakedefine DATA_DIR "@DATA_DIR@"
+
