@@ -86,7 +86,7 @@ static void cleanup(void)
 gp_test config_intersection(void)
 {
     gp_test test;
-    test.name = "Waterhsed intersections";
+    test.name = "Watershed intersections";
     test.description =
         "Load and create an STRtree for the watersheds."
         "Set up a list of buffered watersheds."
