@@ -49,8 +49,8 @@ getGeometryBounds(const GEOSGeometry* g, double* xmin, double* ymin, double* xma
     GEOSGeom_destroy(env);
 }
 
-/* For each run, prepare a geometry, then hit it with
-   a bunch of points */
+/* For each watershed, prepare the geometry, then hit it with
+   a bunch of points for in/out test */
 static void
 run(void)
 {

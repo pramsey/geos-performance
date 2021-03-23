@@ -46,7 +46,9 @@ static void tree_callback(void *item, void *userdata)
     return;
 }
 
-/* For each run, union all the geometries in the collection */
+/* For each regular circle, find all the random points that hit
+   its envelope
+*/
 static void run(void)
 {
     size_t i;

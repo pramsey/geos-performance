@@ -19,7 +19,7 @@ static void setup(void)
     read_data_file("watersheds.wkt.gz", &watersheds);
 }
 
-/* For each run, buffer each geometries in the collection */
+/* For each run, buffer each geometry in the collection */
 static void run(void)
 {
     size_t i;

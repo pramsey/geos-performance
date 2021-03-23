@@ -34,7 +34,7 @@ static void setup(void)
 
 }
 
-/* For each run, union all the geometries in the collection */
+/* For each regular point, find the nearest random point */
 static void run(void)
 {
     size_t i;

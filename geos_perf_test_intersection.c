@@ -20,14 +20,14 @@ static void setup(void)
     geomlist_init(&watersheds_buffered);
     read_data_file("watersheds.wkt.gz", &watersheds);
 
-    /* Calculate circles for the regular points */
+    /* Calculate buffers of the polygons */
     for (i = 0; i < geomlist_size(&watersheds); i++)
     {
         const GEOSGeometry* geom = geomlist_get(&watersheds, i);
         geomlist_push(&watersheds_buffered, GEOSBuffer(geom, 100.0, 16));
     }
 
-    /* populate tree watersheds */
+    /* Populate tree with watersheds */
     tree = GEOSSTRtree_create(10);
     for (i = 0; i < geomlist_size(&watersheds); i++)
     {
@@ -37,7 +37,7 @@ static void setup(void)
 
 }
 
-/* no-op callback function */
+/* Callback to in-fill list of intersecting sheds */
 static void tree_callback(void *item, void *userdata)
 {
     GEOSGeometryList* query_result = (GEOSGeometryList*)userdata;
@@ -46,7 +46,9 @@ static void tree_callback(void *item, void *userdata)
     return;
 }
 
-/* For each run, union all the geometries in the collection */
+/* For each buffered watershed, find all intersecting unbuffered
+   sheds, and then intersect those with the buffered watershed.
+*/
 static void run(void)
 {
     size_t i, j;
