@@ -20,6 +20,7 @@ gp_test config_tree_points(void);
 gp_test config_tree_points_nn(void);
 gp_test config_union_watersheds(void);
 gp_test config_isvalid_australia(void);
+gp_test config_valid_watersheds(void);
 
 /*
 * And then add the function name here
@@ -33,6 +34,7 @@ static gp_config_func gp_config_funcs[] =
     config_tree_points_nn,
     config_point_in_polygon,
     config_isvalid_australia,
+    config_valid_watersheds,
     NULL
 };
 
@@ -177,11 +179,21 @@ time_difference(struct timeval start, struct timeval end)
 }
 
 static void
+geos_log_stderr(const char* fmt, ...)
+{
+    va_list ap;
+    if (debug_level < 1)
+        return;
+    va_start(ap, fmt);
+    vfprintf(stderr, fmt, ap);
+    va_end(ap);
+}
+
+static void
 log_stderr(const char* fmt, ...)
 {
     va_list ap;
     va_start(ap, fmt);
-    // vprintf (fmt, ap);
     vfprintf(stderr, fmt, ap);
     va_end(ap);
 }
@@ -220,16 +232,16 @@ run_test(const gp_test* test)
     struct timeval start, end;
 
     /* Prepare to run tests */
-    log_stderr("SETUP [%s] ... ", test->name);
+    log_stderr("SETUP [%s] ...", test->name);
     start = time_now();
     if (test->func_setup)
         test->func_setup();
     end = time_now();
     setup_time = time_difference(start, end);
-    log_stderr("%0.3gs\n", setup_time);
+    log_stderr(" %0.3gs\n", setup_time);
 
     /* Run the tests and time them */
-    log_stderr("  RUN [%s] ... ", test->name);
+    log_stderr("  RUN [%s] ...", test->name);
     for (i = 0; i < test->count; i++)
     {
         start = time_now();
@@ -238,16 +250,16 @@ run_test(const gp_test* test)
         end = time_now();
         run_time += time_difference(start, end);
     }
-    log_stderr("%0.3gs\n", run_time);
+    log_stderr(" %0.3gs\n", run_time);
 
     /* Clean up after the tests */
-    log_stderr("CLEAN [%s] ... ", test->name);
+    log_stderr("CLEAN [%s] ...", test->name);
     start = time_now();
     if (test->func_cleanup)
         test->func_cleanup();
     end = time_now();
     cleanup_time = time_difference(start, end);
-    log_stderr("%0.3gs\n", cleanup_time);
+    log_stderr(" %0.3gs\n", cleanup_time);
 
     /* Sumarize the results */
     result.version = GEOSversion();
@@ -271,7 +283,7 @@ int
 main(int argc, char *argv[])
 {
 
-    initGEOS(log_stderr, log_stderr);
+    initGEOS(geos_log_stderr, geos_log_stderr);
 
     log_stderr("VERSION [GEOS %s]\n", GEOSversion());
 

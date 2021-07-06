@@ -40,7 +40,7 @@ static void cleanup(void)
 gp_test config_isvalid_australia(void)
 {
     gp_test test;
-    test.name = "Australia IsValid";
+    test.name = "Australia isValid";
     test.description =
         "Load a complex boundary of Australia with many"
         "offshore islands and calculate valididy of"
