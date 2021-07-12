@@ -21,6 +21,7 @@ gp_test config_tree_points_nn(void);
 gp_test config_union_watersheds(void);
 gp_test config_isvalid_australia(void);
 gp_test config_valid_watersheds(void);
+gp_test config_isvalid_landcover(void);
 
 /*
 * And then add the function name here
@@ -35,6 +36,7 @@ static gp_config_func gp_config_funcs[] =
     config_point_in_polygon,
     config_isvalid_australia,
     config_valid_watersheds,
+    config_isvalid_landcover,
     NULL
 };
 
