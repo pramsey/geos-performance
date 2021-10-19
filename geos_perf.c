@@ -14,6 +14,7 @@
 * signature here.
 */
 gp_test config_buffer_watersheds(void);
+gp_test config_buffer_australia(void);
 gp_test config_intersection(void);
 gp_test config_point_in_polygon(void);
 gp_test config_tree_points(void);
@@ -29,6 +30,7 @@ gp_test config_isvalid_landcover(void);
 static gp_config_func gp_config_funcs[] =
 {
     config_buffer_watersheds,
+    config_buffer_australia,
     config_intersection,
     config_union_watersheds,
     config_tree_points,
