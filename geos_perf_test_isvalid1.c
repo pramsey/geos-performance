@@ -48,7 +48,7 @@ gp_test config_isvalid_australia(void)
     test.func_setup = setup;
     test.func_run = run;
     test.func_cleanup = cleanup;
-    test.count = 2;
+    test.count = 4;
     return test;
 }
 

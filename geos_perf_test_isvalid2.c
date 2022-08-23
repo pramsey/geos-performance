@@ -49,7 +49,7 @@ gp_test config_valid_watersheds(void)
     test.func_setup = setup;
     test.func_run = run;
     test.func_cleanup = cleanup;
-    test.count = 15;
+    test.count = 30;
     return test;
 }
 

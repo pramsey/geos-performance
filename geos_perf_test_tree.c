@@ -88,7 +88,7 @@ gp_test config_tree_points(void)
     test.func_setup = setup;
     test.func_run = run;
     test.func_cleanup = cleanup;
-    test.count = 400;
+    test.count = 800;
     return test;
 }
 
