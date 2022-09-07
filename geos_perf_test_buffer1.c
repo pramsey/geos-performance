@@ -7,7 +7,7 @@
 */
 
 /* Variables where data lives between the setup/run/cleanup stages */
-GEOSGeometryList watersheds;
+static GEOSGeometryList watersheds;
 
 /* Read any data we need, and create any structures */
 static void setup(void)

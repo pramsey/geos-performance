@@ -7,10 +7,10 @@
 */
 
 /* Variables where data lives between the setup/run/cleanup stages */
-GEOSGeometryList points_random;
-GEOSGeometryList points_regular;
-GEOSGeometryList circles_regular;
-GEOSSTRtree* tree;
+static GEOSGeometryList points_random;
+static GEOSGeometryList points_regular;
+static GEOSGeometryList circles_regular;
+static GEOSSTRtree* tree;
 
 
 /* Read any data we need, and create any structures */
