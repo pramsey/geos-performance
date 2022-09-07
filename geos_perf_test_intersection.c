@@ -7,9 +7,9 @@
 */
 
 /* Variables where data lives between the setup/run/cleanup stages */
-GEOSGeometryList watersheds;
-GEOSGeometryList watersheds_buffered;
-GEOSSTRtree* tree;
+static GEOSGeometryList watersheds;
+static GEOSGeometryList watersheds_buffered;
+static GEOSSTRtree* tree;
 
 
 /* Read any data we need, and create any structures */

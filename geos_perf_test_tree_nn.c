@@ -10,9 +10,9 @@
 #if GEOS_VERSION_CMP > 305
 
 /* Variables where data lives between the setup/run/cleanup stages */
-GEOSGeometryList points_random;
-GEOSGeometryList points_regular;
-GEOSSTRtree* tree;
+static GEOSGeometryList points_random;
+static GEOSGeometryList points_regular;
+static GEOSSTRtree* tree;
 
 
 /* Read any data we need, and create any structures */

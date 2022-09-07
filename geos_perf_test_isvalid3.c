@@ -7,7 +7,7 @@
 */
 
 /* Variables where data lives between the setup/run/cleanup stages */
-GEOSGeometryList land_covers;
+static GEOSGeometryList land_covers;
 
 /* Read any data we need, and create any structures */
 static void setup(void)

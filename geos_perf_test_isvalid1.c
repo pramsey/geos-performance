@@ -7,8 +7,8 @@
 */
 
 /* Variables where data lives between the setup/run/cleanup stages */
-GEOSGeometryList australiaFile;
-GEOSGeometry *australia;
+static GEOSGeometryList australiaFile;
+static GEOSGeometry *australia;
 
 /* Read any data we need, and create any structures */
 static void setup(void)
