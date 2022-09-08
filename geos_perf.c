@@ -286,7 +286,6 @@ uint32_t debug_level = 0;
 int
 main(int argc, char *argv[])
 {
-
     initGEOS(geos_log_stderr, geos_log_stderr);
 
     log_stderr("VERSION [GEOS %s]\n", GEOSversion());
@@ -295,6 +294,20 @@ main(int argc, char *argv[])
     for (config_func = gp_config_funcs; *config_func != NULL; config_func++)
     {
         gp_test test = (*config_func)();
+
+        // If command-line arguments are provided, interpret them to be the
+        // set of tests we should run and skip tests not included in the list.
+        if (argc > 1) {
+            int found = 0;
+            for (int i = 1; i < argc; i++) {
+                if (strcmp(test.name, argv[i]) == 0) {
+                    found = 1;
+                }
+            }
+            if (!found) {
+                continue;
+            }
+        }
 
         if (test.count < 1)
             continue;
