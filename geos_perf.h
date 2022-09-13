@@ -84,6 +84,11 @@ size_t geomlist_size(GEOSGeometryList* gl);
 GEOSGeometry* geomlist_pop(GEOSGeometryList* gl);
 const GEOSGeometry* geomlist_get(GEOSGeometryList* gl, size_t i);
 
+int geos_version_major();
+int geos_version_minor();
+
+extern void* geos_lib_handle;
+
 /**
 * Read a wkt.gz file, with one wkt geometry per line, gzipped.
 * File name is relative to the data directory.

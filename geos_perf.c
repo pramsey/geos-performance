@@ -4,8 +4,10 @@
 #include <string.h>
 #include <sys/time.h>
 #include <sys/resource.h>
-
 #include "geos_perf.h"
+#include <dlfcn.h>
+
+void* geos_lib_handle;
 
 /************************************************************************
 * REGISTER NEW TESTS HERE
@@ -134,6 +136,31 @@ geomlist_print(GEOSGeometryList* gl)
     GEOSWKTWriter_destroy(writer);
 }
 
+/************************************************************************
+* Utility functions to probe GEOS capabilities
+*/
+
+int geos_version_major() {
+    const char* geos_ver = GEOSversion();
+
+    return atoi(geos_ver);
+}
+
+int geos_version_minor() {
+    const char* geos_ver = GEOSversion();
+    size_t nchar = strlen(geos_ver);
+
+    size_t dot1 = 0;
+
+    for (size_t i = 0; i < nchar; i++) {
+        if (geos_ver[i] == '.') {
+            dot1 = i;
+            break;
+        }
+    }
+
+    return atoi(geos_ver + dot1 + 1);
+}
 
 /************************************************************************
 * Utility functions to polyfill old GEOS versions
@@ -287,8 +314,14 @@ int
 main(int argc, char *argv[])
 {
     initGEOS(geos_log_stderr, geos_log_stderr);
-
     log_stderr("VERSION [GEOS %s]\n", GEOSversion());
+
+    geos_lib_handle = dlopen("libgeos_c.so", RTLD_LAZY);
+    if (!geos_lib_handle)
+    {
+        log_stderr("Failed to dynamically load libgeos_c.so");
+    }
+
 
     gp_config_func* config_func;
     for (config_func = gp_config_funcs; *config_func != NULL; config_func++)
@@ -317,6 +350,7 @@ main(int argc, char *argv[])
     }
 
     finishGEOS();
+    dlclose(geos_lib_handle);
 
     return 0;
 }
