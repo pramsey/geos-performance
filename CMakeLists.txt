@@ -60,12 +60,20 @@ set_target_properties(libgeos_c PROPERTIES
 
 ################################################################################
 
+add_library(geos_perf_cxx_flags INTERFACE)
+if (APPLE)
+  target_compile_options(geos_perf_cxx_flags INTERFACE "-DAPPLE")
+endif()
+
+################################################################################
+
 # add the executable and link geos/zlib
 file(GLOB_RECURSE _sources ${CMAKE_SOURCE_DIR}/geos_perf*.c CONFIGURE_DEPEND)
 add_executable(geos_perf ${_sources})
 unset(_sources)
 target_link_libraries(geos_perf libgeos_c)
 target_link_libraries(geos_perf zlib)
+target_link_libraries(geos_perf geos_perf_cxx_flags)
 target_include_directories(geos_perf
   PRIVATE $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}>
   )
