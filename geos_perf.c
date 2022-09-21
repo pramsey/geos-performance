@@ -322,9 +322,11 @@ main(int argc, char *argv[])
 #endif
 
     geos_lib_handle = dlopen(libname, RTLD_LAZY);
-    if (!geos_lib_handle)
-    {
-        log_stderr("Failed to dynamically load %s",libname);
+    if (!geos_lib_handle) {
+        log_stderr("SETUP [Global] Failed to dynamically load %s\n",libname);
+    }
+    else {
+        log_stderr("SETUP [Global] Loaded %s\n",libname);
     }
 
 
