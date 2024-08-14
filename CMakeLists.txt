@@ -20,16 +20,16 @@ if (NOT GEOS_CONFIG)
   message(FATAL_ERROR, "Unable to find geos-config on PATH")
 endif()
 
-exec_program(${GEOS_CONFIG}
-  ARGS --clibs
-  OUTPUT_VARIABLE GEOS_LIBS)
+execute_process(COMMAND ${GEOS_CONFIG} --clibs
+  OUTPUT_VARIABLE GEOS_LIBS
+  OUTPUT_STRIP_TRAILING_WHITESPACE)
 
-exec_program(${GEOS_CONFIG}
-  ARGS --cflags
-  OUTPUT_VARIABLE GEOS_INCLUDES)
+execute_process(COMMAND ${GEOS_CONFIG} --cflags
+  OUTPUT_VARIABLE GEOS_INCLUDES
+  OUTPUT_STRIP_TRAILING_WHITESPACE)
 
-# message("-- GEOS_LIBS ${GEOS_LIBS}")
-# message("-- GEOS_INCLUDES ${GEOS_INCLUDES}")
+message("-- GEOS_LIBS ${GEOS_LIBS}")
+message("-- GEOS_INCLUDES ${GEOS_INCLUDES}")
 
 string(REGEX MATCH "[-][L]([^ ;]+)"
             _nothing
