@@ -54,8 +54,7 @@ getGeometryBounds(const GEOSGeometry* g, double* xmin, double* ymin, double* xma
 static void
 run(void)
 {
-    size_t i;
-    for (i = 0; i < geomlist_size(&watersheds); i++)
+    for (size_t i = 0; i < geomlist_size(&watersheds); i++)
     {
         double xmin, ymin, xmax, ymax;
         double w, h, s, r, x, y;
@@ -108,7 +107,7 @@ gp_test config_point_in_polygon(void)
     test.func_setup = setup;
     test.func_run = run;
     test.func_cleanup = cleanup;
-    test.count = 10;
+    test.count = 500;
     return test;
 }
 
