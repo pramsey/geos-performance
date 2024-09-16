@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <float.h>
+#include <dlfcn.h>
 
 #include "geos_perf.h"
 
@@ -12,6 +13,7 @@ static GEOSGeometryList watersheds;
 static GEOSGeometryList prepared_watersheds;
 static GEOSSTRtree* tree;
 
+extern char GEOSPreparedContainsXY(const GEOSPreparedGeometry*, double x, double y);
 
 /* Read any data we need, and create any structures */
 static void
@@ -49,11 +51,36 @@ getGeometryBounds(const GEOSGeometry* g, double* xmin, double* ymin, double* xma
     GEOSGeom_destroy(env);
 }
 
+static void contains_test_kernel_1(const GEOSPreparedGeometry* prepgeom, double x, double y) {
+    GEOSGeometry* pt = createPointFromXY(x, y);
+    char in = GEOSPreparedContains(prepgeom, pt);
+    GEOSGeom_destroy(pt);
+}
+
+static char (*prep_contains_xy)(const GEOSPreparedGeometry* pg, double x, double y) = NULL;
+
+static void contains_test_kernel_2(const GEOSPreparedGeometry* prepgeom, double x, double y) {
+    prep_contains_xy = dlsym(geos_lib_handle, "GEOSPreparedContainsXY");
+
+    if (!prep_contains_xy) {
+        debug_stderr(0, "%s\n", "Failed to load GEOSPreparedContainsXY");
+    }
+
+    char in = prep_contains_xy(prepgeom, x, y);
+}
+
 /* For each watershed, prepare the geometry, then hit it with
    a bunch of points for in/out test */
 static void
 run(void)
 {
+    void (*test_kernel)(const GEOSPreparedGeometry* pg, double x, double y) = NULL;
+    if (geos_version_major() >= 3 && geos_version_minor() >= 12) {
+        test_kernel = contains_test_kernel_2;
+    } else {
+        test_kernel = contains_test_kernel_1;
+    }
+
     size_t i;
     for (i = 0; i < geomlist_size(&watersheds); i++)
     {
@@ -76,9 +103,7 @@ run(void)
         {
             for (y = ymin; y < ymax; y += r)
             {
-                GEOSGeometry* pt = createPointFromXY(x, y);
-                char in = GEOSPreparedContains(prepgeom, pt);
-                GEOSGeom_destroy(pt);
+                test_kernel(prepgeom, x, y);
             }
         }
         GEOSPreparedGeom_destroy(prepgeom);
