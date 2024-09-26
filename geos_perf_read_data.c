@@ -148,4 +148,29 @@ read_data_file(const char* file_name, GEOSGeometryList* geoms)
     return 0;
 }
 
+GEOSGeometry *
+read_geometry_file(const char* file_name)
+{
+    char full_file_name[MAXSTRLEN];
+    snprintf(full_file_name, MAXSTRLEN, "%s/%s", DATA_DIR, file_name);
+    int read_rv = decompress_data_file(full_file_name, TMPFILE);
 
+    char *line = NULL;
+    size_t linecap = 0;
+    ssize_t linelen;
+    FILE * file = fopen(TMPFILE, "r");
+    TFAIL (!file, "open tmp input");
+
+    GEOSGeometry *g;
+
+    GEOSWKTReader* reader = GEOSWKTReader_create();
+    if ((linelen = getline(&line, &linecap, file)) > 0)
+    {
+        g = GEOSWKTReader_read(reader, line);
+    }
+    GEOSWKTReader_destroy(reader);
+
+    TFAIL (fclose (file), "close input");
+
+    return g;
+}

@@ -92,6 +92,12 @@ const GEOSGeometry* geomlist_get(GEOSGeometryList* gl, size_t i);
 int read_data_file(const char* file_name, GEOSGeometryList* geoms);
 
 /**
+* Read a wkt.gz file into a single geometry. Assumes the
+* geometry is on a single line.
+*/
+GEOSGeometry* read_geometry_file(const char* file_name);
+
+/**
 * Write a debugging message to stderr if the debug level
 * is higher than the threshold.
 */

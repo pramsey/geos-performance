@@ -63,10 +63,6 @@ run(void)
         const GEOSPreparedGeometry* prepgeom = GEOSPrepare(geom);
 
         getGeometryBounds(geom, &xmin, &ymin, &xmax, &ymax);
-        // GEOSGeom_getXMin(geom, &xmin);
-        // GEOSGeom_getYMin(geom, &ymin);
-        // GEOSGeom_getXMax(geom, &xmax);
-        // GEOSGeom_getYMax(geom, &ymax);
         w = xmax - xmin;
         h = ymax - ymin;
         s = w < h ? h : w;
@@ -75,9 +71,13 @@ run(void)
         {
             for (y = ymin; y < ymax; y += r)
             {
+#if GEOS_VERSION_CMP > 311
+                char in = GEOSPreparedContainsXY(prepgeom, x, y);
+#else
                 GEOSGeometry* pt = createPointFromXY(x, y);
                 char in = GEOSPreparedContains(prepgeom, pt);
                 GEOSGeom_destroy(pt);
+#endif
             }
         }
         GEOSPreparedGeom_destroy(prepgeom);
@@ -107,7 +107,7 @@ gp_test config_point_in_polygon(void)
     test.func_setup = setup;
     test.func_run = run;
     test.func_cleanup = cleanup;
-    test.count = 500;
+    test.count = 50;
     return test;
 }
 

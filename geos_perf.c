@@ -23,6 +23,7 @@ gp_test config_union_watersheds(void);
 gp_test config_isvalid_australia(void);
 gp_test config_valid_watersheds(void);
 gp_test config_isvalid_landcover(void);
+gp_test config_delaunay(void);
 
 /*
 * And then add the function name here
@@ -39,6 +40,7 @@ static gp_config_func gp_config_funcs[] =
     config_isvalid_australia,
     config_valid_watersheds,
     config_isvalid_landcover,
+    config_delaunay,
     NULL
 };
 
